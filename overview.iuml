@@ -1,0 +1,20 @@
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(dev, "dev@localhost", "")
+
+System_Boundary(machine, "dev machine") {
+    Container(app, "Application", "prometheus metrics enabled", "eg Micrometer + [SpringBoot, Micronaut, Quarkus]")
+    System_Boundary(c1, "docker") {
+    ContainerDb(prometheus, "Prometheus", "app discovery | scrape configs", "")
+    Container(grafana, "Grafana", "prometheus datasource", "")
+}
+}
+
+
+Rel_R(dev, grafana, "watch", "HTTP")
+Rel(dev, app, "developing", "eg java | kotlin")
+Rel_R(prometheus, app, "scrape", "HTTP")
+Rel(grafana, prometheus, "read", "HTTP")
+
+@enduml
