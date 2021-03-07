@@ -13,6 +13,9 @@ services:
     restart: unless-stopped
     ports:
       - "9090:9090"
+    # uncomment below extra_hosts definition for linux hosts
+#    extra_hosts:
+#      - "host.docker.internal:host-gateway"
     networks:
       - monitor-net
 
